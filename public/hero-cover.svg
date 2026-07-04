@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a"/>
+      <stop offset="100%" style="stop-color:#581c87"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <text x="400" y="210" text-anchor="middle" fill="#93c5fd" font-size="28" font-family="sans-serif">8bþ</text>
+  <text x="400" y="250" text-anchor="middle" fill="#64748b" font-size="16" font-family="sans-serif">ÿb: /public/hero-cover.jpg</text>
+</svg>
