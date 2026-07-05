@@ -33,6 +33,7 @@ export default function StatsPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   const loadStats = useCallback(async () => {
     const res = await fetch("/api/stats", { cache: "no-store" });
@@ -49,9 +50,15 @@ export default function StatsPage() {
 
   useEffect(() => {
     loadStats().finally(() => setLoading(false));
-    const timer = setInterval(loadStats, 30000);
+    const timer = setInterval(loadStats, 5000);
     return () => clearInterval(timer);
   }, [loadStats]);
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await loadStats();
+    setRefreshing(false);
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -132,9 +139,23 @@ export default function StatsPage() {
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold">数据统计</h1>
-            <p className="text-gray-400 text-sm mt-1">每 30 秒自动刷新</p>
+            <p className="text-gray-400 text-sm mt-1">
+              每 5 秒自动刷新
+              {data?.updatedAt
+                ? ` · 最后更新 ${new Date(data.updatedAt).toLocaleTimeString("zh-TW")}`
+                : ""}
+              {data?.eventCount !== undefined ? ` · 已记录 ${data.eventCount} 条事件` : ""}
+            </p>
           </div>
           <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={handleRefresh}
+              disabled={refreshing}
+              className="text-sm text-blue-300 hover:text-blue-200 border border-blue-400/30 rounded-lg px-4 py-2 disabled:opacity-50"
+            >
+              {refreshing ? "刷新中…" : "立即刷新"}
+            </button>
             <button
               type="button"
               onClick={handleReset}
