@@ -1,12 +1,17 @@
+"use client";
+
 import Image from "next/image";
 import { siteConfig } from "@/lib/config";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export default function ScreenshotGallery() {
+  const { t } = useLanguage();
+
   return (
     <section id="screenshots" className="py-16 section-divider">
       <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-2">游戏截图</h2>
-        <p className="text-gray-500 text-center mb-10">一睹精彩游戏画面</p>
+        <h2 className="text-3xl font-bold text-center mb-2">{t.screenshots.title}</h2>
+        <p className="text-gray-500 text-center mb-10">{t.screenshots.subtitle}</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {siteConfig.screenshots.map((shot, i) => (

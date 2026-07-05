@@ -1,24 +1,21 @@
-import { siteConfig } from "@/lib/config";
+"use client";
 
-export const metadata = {
-  title: `联系我们 — ${siteConfig.name}`,
-  description: `通过 Telegram 联系 ${siteConfig.name} 团队`,
-};
+import { siteConfig } from "@/lib/config";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export default function Contact() {
+  const { t } = useLanguage();
   const { contact } = siteConfig;
 
   return (
     <main className="min-h-screen py-10 px-6">
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-4xl font-bold">📩 联系我们</h1>
-        <p className="text-gray-400 mt-3">
-          有问题、反馈或合作需求？欢迎通过 Telegram 联系我们。
-        </p>
+        <h1 className="text-4xl font-bold">📩 {t.contact.title}</h1>
+        <p className="text-gray-400 mt-3">{t.contact.subtitle}</p>
 
         <div className="mt-8">
           <div className="content-card p-5">
-            <p className="text-gray-400 text-sm">Telegram</p>
+            <p className="text-gray-400 text-sm">{t.contact.telegram}</p>
             <a
               href={contact.telegram}
               target="_blank"

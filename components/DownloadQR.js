@@ -2,6 +2,7 @@
 
 import { QRCodeSVG } from "qrcode.react";
 import { siteConfig } from "@/lib/config";
+import { useLanguage } from "@/components/LanguageProvider";
 
 const colorMap = {
   green: "border-green-800/50 bg-green-950/20",
@@ -10,10 +11,12 @@ const colorMap = {
 };
 
 export default function DownloadQR() {
+  const { t } = useLanguage();
+
   const platforms = [
-    { key: "android", ...siteConfig.downloads.android },
-    { key: "ios", ...siteConfig.downloads.ios },
-    { key: "pc", ...siteConfig.downloads.pc },
+    { key: "android", ...siteConfig.downloads.android, label: t.download.platforms.android },
+    { key: "ios", ...siteConfig.downloads.ios, label: t.download.platforms.ios },
+    { key: "pc", ...siteConfig.downloads.pc, label: t.download.platforms.pc },
   ];
 
   return (
@@ -28,7 +31,7 @@ export default function DownloadQR() {
           </div>
           <p className="mt-4 font-medium text-center">{p.label}</p>
           <p className="text-gray-500 text-xs mt-1 text-center break-all">
-            扫码或点击下载
+            {t.download.scanHint}
           </p>
           <a
             href={p.url}
@@ -36,7 +39,7 @@ export default function DownloadQR() {
             rel="noopener noreferrer"
             className="mt-4 text-sm text-blue-400 hover:text-blue-300 underline"
           >
-            直接下载 →
+            {t.download.directDownload}
           </a>
         </div>
       ))}
