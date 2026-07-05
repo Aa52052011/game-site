@@ -76,6 +76,18 @@ export default function StatsPage() {
     setData(null);
   };
 
+  const handleReset = async () => {
+    if (!window.confirm("确定要清空所有统计数据吗？此操作不可恢复。")) return;
+
+    const res = await fetch("/api/stats/reset", { method: "POST" });
+    const json = await res.json();
+    if (!res.ok) {
+      window.alert(json.error || "清空失败");
+      return;
+    }
+    await loadStats();
+  };
+
   if (loading) {
     return (
       <main className="min-h-screen py-16 px-6">
@@ -122,13 +134,22 @@ export default function StatsPage() {
             <h1 className="text-3xl font-bold">数据统计</h1>
             <p className="text-gray-400 text-sm mt-1">每 30 秒自动刷新</p>
           </div>
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="text-sm text-gray-400 hover:text-white border border-white/15 rounded-lg px-4 py-2"
-          >
-            退出登录
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={handleReset}
+              className="text-sm text-red-300 hover:text-red-200 border border-red-400/30 rounded-lg px-4 py-2"
+            >
+              清空数据
+            </button>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="text-sm text-gray-400 hover:text-white border border-white/15 rounded-lg px-4 py-2"
+            >
+              退出登录
+            </button>
+          </div>
         </div>
 
         {!data?.configured ? (
