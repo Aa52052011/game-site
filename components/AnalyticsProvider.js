@@ -3,9 +3,7 @@
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { Analytics } from "@vercel/analytics/react";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import {
-  GA_ID,
   trackPageEngagement,
   trackPageView,
   trackScrollDepth,
@@ -62,7 +60,6 @@ export default function AnalyticsProvider() {
     <>
       <AnalyticsTracker />
       <Analytics />
-      {GA_ID ? <GoogleAnalytics gaId={GA_ID} /> : null}
     </>
   );
 }
