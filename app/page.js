@@ -11,7 +11,7 @@ export default function Home() {
       <Features />
       <ScreenshotGallery />
 
-      <section className="py-16 border-t border-gray-900">
+      <section className="py-16 section-divider">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h2 className="text-3xl font-bold">准备好开始了吗？</h2>
           <p className="text-gray-500 mt-2">免费下载，即刻畅玩</p>

@@ -48,7 +48,7 @@ export default function Download() {
           <h2 className="text-xl font-semibold mb-4">📋 更新日志</h2>
           <ul className="space-y-4">
             {siteConfig.changelog.map((entry) => (
-              <li key={entry.version} className="bg-gray-900/50 border border-gray-800 rounded-xl p-4">
+              <li key={entry.version} className="content-card p-4">
                 <div className="flex items-center gap-3">
                   <span className="font-mono text-blue-400">{entry.version}</span>
                   <span className="text-gray-500 text-sm">{entry.date}</span>

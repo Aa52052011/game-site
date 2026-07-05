@@ -3,25 +3,32 @@ import { siteConfig } from "@/lib/config";
 
 export default function ScreenshotGallery() {
   return (
-    <section id="screenshots" className="py-16 border-t border-gray-900">
+    <section id="screenshots" className="py-16 section-divider">
       <div className="max-w-6xl mx-auto px-6">
         <h2 className="text-3xl font-bold text-center mb-2">游戏截图</h2>
         <p className="text-gray-500 text-center mb-10">一睹精彩游戏画面</p>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {siteConfig.screenshots.map((shot, i) => (
             <div
               key={shot.src}
-              className="aspect-[9/16] md:aspect-video rounded-xl overflow-hidden border border-gray-800 hover:border-blue-600/50 transition-colors group"
+              className="content-card overflow-hidden hover:border-blue-400/40 transition-colors group"
             >
-              <Image
-                src={shot.src}
-                alt={shot.alt}
-                width={400}
-                height={711}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                priority={i < 2}
-              />
+              <div className="aspect-video relative overflow-hidden">
+                <Image
+                  src={shot.src}
+                  alt={shot.alt}
+                  width={640}
+                  height={360}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  priority={i < 2}
+                />
+              </div>
+              {shot.title && (
+                <p className="px-3 py-2 text-sm text-gray-300 truncate">
+                  {shot.title}
+                </p>
+              )}
             </div>
           ))}
         </div>

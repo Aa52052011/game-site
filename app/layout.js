@@ -1,6 +1,7 @@
 import Link from "next/link";
 import "./globals.css";
 import { siteConfig } from "@/lib/config";
+import Logo from "@/components/Logo";
 
 export const metadata = {
   title: `${siteConfig.name} — 官方网站`,
@@ -15,17 +16,17 @@ function Nav() {
   ];
 
   return (
-    <nav className="border-b border-gray-800 bg-black/80 backdrop-blur sticky top-0 z-50">
+    <nav className="border-b border-white/10 bg-black/60 backdrop-blur-md sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="text-lg font-bold text-white">
-          🎮 {siteConfig.name}
+        <Link href="/" className="flex items-center">
+          <Logo className="h-7 w-auto" />
         </Link>
         <div className="flex gap-6 text-sm">
           {links.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-gray-300 hover:text-white transition-colors"
             >
               {label}
             </Link>
@@ -38,7 +39,7 @@ function Nav() {
 
 function Footer() {
   return (
-    <footer className="border-t border-gray-900 py-8 text-center text-gray-500 text-sm">
+    <footer className="section-divider bg-black/60 backdrop-blur-md py-8 text-center text-gray-400 text-sm">
       <p>© {new Date().getFullYear()} {siteConfig.name}. 保留所有权利。</p>
     </footer>
   );
@@ -47,10 +48,13 @@ function Footer() {
 export default function RootLayout({ children }) {
   return (
     <html lang="zh-CN">
-      <body className="antialiased bg-black text-white">
-        <Nav />
-        {children}
-        <Footer />
+      <body className="antialiased text-white">
+        <div className="site-overlay" aria-hidden="true" />
+        <div className="relative z-10">
+          <Nav />
+          {children}
+          <Footer />
+        </div>
       </body>
     </html>
   );
