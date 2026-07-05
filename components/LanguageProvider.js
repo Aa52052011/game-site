@@ -15,13 +15,11 @@ const STORAGE_KEY = "site-locale";
 const LanguageContext = createContext(null);
 
 function getPageTitle(pathname, t, name) {
-  if (pathname === "/download") return `${t.download.metaTitle} — ${name}`;
   if (pathname === "/contact") return `${t.contact.metaTitle} — ${name}`;
   return `${name} — ${t.meta.title}`;
 }
 
 function getPageDescription(pathname, t, name) {
-  if (pathname === "/download") return interpolate(t.download.metaDescription, { name });
   if (pathname === "/contact") return interpolate(t.contact.metaDescription, { name });
   return t.meta.description;
 }

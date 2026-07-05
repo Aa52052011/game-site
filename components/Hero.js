@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import { siteConfig } from "@/lib/config";
 import Logo from "@/components/Logo";
@@ -27,12 +26,14 @@ export default function Hero() {
             <p className="text-gray-300 mt-2 drop-shadow">{t.hero.description}</p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                href="/download"
+              <a
+                href={siteConfig.registerUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-blue-500 hover:bg-blue-600 px-8 py-3 rounded-xl text-lg font-medium transition-colors"
               >
-                ⬇ {t.hero.download}
-              </Link>
+                {t.hero.register}
+              </a>
               <a
                 href="#screenshots"
                 className="bg-blue-500 hover:bg-blue-600 px-8 py-3 rounded-xl text-lg font-medium transition-colors"

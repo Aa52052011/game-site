@@ -10,7 +10,6 @@ export default function Nav() {
 
   const links = [
     { href: "/", label: t.nav.home },
-    { href: "/download", label: t.nav.download },
     { href: "/contact", label: t.nav.contact },
   ];
 

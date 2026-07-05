@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
 import ScreenshotGallery from "@/components/ScreenshotGallery";
+import { siteConfig } from "@/lib/config";
 import { useLanguage } from "@/components/LanguageProvider";
 
 export default function Home() {
@@ -19,12 +19,14 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h2 className="text-3xl font-bold">{t.cta.title}</h2>
           <p className="text-gray-500 mt-2">{t.cta.subtitle}</p>
-          <Link
-            href="/download"
+          <a
+            href={siteConfig.registerUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block mt-6 bg-blue-500 hover:bg-blue-600 px-10 py-4 rounded-xl text-lg font-medium transition-colors"
           >
-            ⬇ {tf(t.cta.button)}
-          </Link>
+            {tf(t.cta.button)}
+          </a>
         </div>
       </section>
     </main>
