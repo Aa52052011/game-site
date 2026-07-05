@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { siteConfig } from "@/lib/config";
 import { useLanguage } from "@/components/LanguageProvider";
+import { trackPromoCopy } from "@/lib/analytics";
 
 async function copyText(text) {
   if (navigator.clipboard?.writeText) {
@@ -28,6 +29,7 @@ export default function PromoCode() {
   const handleCopy = async () => {
     try {
       await copyText(code);
+      trackPromoCopy("promo_banner");
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {

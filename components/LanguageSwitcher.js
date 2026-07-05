@@ -2,6 +2,7 @@
 
 import { localeLabels, locales } from "@/lib/i18n/translations";
 import { useLanguage } from "@/components/LanguageProvider";
+import { trackLanguageSwitch } from "@/lib/analytics";
 
 export default function LanguageSwitcher() {
   const { locale, setLocale } = useLanguage();
@@ -12,7 +13,10 @@ export default function LanguageSwitcher() {
         <button
           key={code}
           type="button"
-          onClick={() => setLocale(code)}
+          onClick={() => {
+            setLocale(code);
+            trackLanguageSwitch(code);
+          }}
           className={`px-2.5 py-1 rounded-md transition-colors ${
             locale === code
               ? "bg-blue-500 text-white font-medium"

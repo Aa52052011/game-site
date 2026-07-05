@@ -4,6 +4,7 @@ import Image from "next/image";
 import { siteConfig } from "@/lib/config";
 import Logo from "@/components/Logo";
 import { useLanguage } from "@/components/LanguageProvider";
+import { trackRegisterClick, trackUserAction } from "@/lib/analytics";
 
 export default function Hero() {
   const { t, name } = useLanguage();
@@ -30,12 +31,14 @@ export default function Hero() {
                 href={siteConfig.registerUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackRegisterClick("hero")}
                 className="bg-blue-500 hover:bg-blue-600 px-8 py-3 rounded-xl text-lg font-medium transition-colors"
               >
                 {t.hero.register}
               </a>
               <a
                 href="#screenshots"
+                onClick={() => trackUserAction("view_screenshots", "hero")}
                 className="bg-blue-500 hover:bg-blue-600 px-8 py-3 rounded-xl text-lg font-medium transition-colors"
               >
                 {t.hero.moments}

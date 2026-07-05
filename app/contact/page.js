@@ -2,6 +2,7 @@
 
 import { siteConfig } from "@/lib/config";
 import { useLanguage } from "@/components/LanguageProvider";
+import { trackExternalClick } from "@/lib/analytics";
 
 export default function Contact() {
   const { t } = useLanguage();
@@ -20,6 +21,7 @@ export default function Contact() {
               href={contact.telegram}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackExternalClick("telegram", "contact")}
               className="mt-1 block hover:text-blue-400 transition-colors"
             >
               {contact.telegram}
