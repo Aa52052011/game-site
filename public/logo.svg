@@ -2,13 +2,14 @@
   <rect width="512" height="512" rx="96" fill="#2C64B0"/>
   <text
     x="256"
-    y="340"
+    y="300"
     text-anchor="middle"
     font-family="Arial Black, Helvetica Neue, Arial, sans-serif"
-    font-size="260"
+    font-size="120"
     font-weight="900"
     font-style="italic"
-    letter-spacing="-12"
-    fill="#FFFFFF"
-  >1X</text>
+    letter-spacing="-4"
+  >
+    <tspan fill="#FFFFFF">1X</tspan><tspan fill="#56B0FF">BET</tspan>
+  </text>
 </svg>
