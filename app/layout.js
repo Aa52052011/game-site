@@ -6,6 +6,10 @@ import Logo from "@/components/Logo";
 export const metadata = {
   title: `${siteConfig.name} — 官方网站`,
   description: siteConfig.description,
+  icons: {
+    icon: [{ url: "/logo.svg", type: "image/svg+xml" }],
+    apple: "/logo.svg",
+  },
 };
 
 function Nav() {
@@ -19,7 +23,7 @@ function Nav() {
     <nav className="border-b border-white/10 bg-black/60 backdrop-blur-md sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center">
-          <Logo className="h-7 w-auto" />
+          <Logo className="h-8 w-8" />
         </Link>
         <div className="flex gap-6 text-sm">
           {links.map(({ href, label }) => (

@@ -13,7 +13,7 @@ export default function Hero() {
               现已开放下载
             </span>
             <div className="mb-2">
-              <Logo className="h-12 md:h-16 w-auto" />
+              <Logo className="h-14 w-14 md:h-20 md:w-20" />
             </div>
             <h1 className="sr-only">{siteConfig.name}</h1>
             <p className="text-gray-200 mt-4 text-lg md:text-xl drop-shadow">

@@ -1,15 +1,14 @@
-import Image from "next/image";
 import { siteConfig } from "@/lib/config";
 
-export default function Logo({ className = "h-8 w-auto" }) {
+export default function Logo({ className = "h-8 w-8" }) {
   return (
-    <Image
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
       src={siteConfig.logo}
       alt={siteConfig.name}
-      width={160}
-      height={40}
       className={className}
-      priority
+      width={512}
+      height={512}
     />
   );
 }
