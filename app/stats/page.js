@@ -181,10 +181,12 @@ export default function StatsPage() {
 
         <section>
           <h2 className="text-lg font-semibold mb-4">今日概览</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <StatCard label="今日访问" value={today.pageViews ?? 0} />
             <StatCard label="今日独立访客" value={today.uniqueVisitors ?? 0} />
             <StatCard label="今日注册点击" value={today.registerClicks ?? 0} />
+            <StatCard label="今日促销码复制" value={today.promoCopy ?? 0} />
+            <StatCard label="今日总事件" value={today.totalEvents ?? 0} hint="含访问、点击、滚动等" />
           </div>
         </section>
 

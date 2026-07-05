@@ -17,6 +17,7 @@ function AnalyticsTracker() {
   const startRef = useRef(Date.now());
   const scrollFiredRef = useRef(new Set());
   const engagementSentRef = useRef(false);
+  const pageViewSentRef = useRef(false);
 
   useEffect(() => {
     if (!TRACKED_PATHS.has(pathname)) return;
@@ -24,7 +25,19 @@ function AnalyticsTracker() {
     startRef.current = Date.now();
     scrollFiredRef.current = new Set();
     engagementSentRef.current = false;
-    trackPageView(pathname);
+    pageViewSentRef.current = false;
+
+    const sendPageView = () => {
+      if (pageViewSentRef.current) return;
+      pageViewSentRef.current = true;
+      trackPageView(pathname);
+    };
+
+    if (document.readyState === "complete") {
+      sendPageView();
+    } else {
+      window.addEventListener("load", sendPageView, { once: true });
+    }
 
     const onScroll = () => {
       const scrollable = document.documentElement.scrollHeight - window.innerHeight;
@@ -57,6 +70,7 @@ function AnalyticsTracker() {
     document.addEventListener("visibilitychange", onVisibilityChange);
 
     return () => {
+      window.removeEventListener("load", sendPageView);
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("visibilitychange", onVisibilityChange);
       sendEngagement();
