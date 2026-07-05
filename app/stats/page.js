@@ -167,7 +167,7 @@ export default function StatsPage() {
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold mb-4">滚动深度</h2>
+          <h2 className="text-lg font-semibold mb-4">滚动深度（累计触发次数）</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[25, 50, 75, 100].map((depth) => (
               <StatCard
