@@ -23,7 +23,7 @@ function Nav() {
     <nav className="border-b border-white/10 bg-black/60 backdrop-blur-md sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center">
-          <Logo className="h-8 w-8" />
+          <Logo className="h-8 w-auto" />
         </Link>
         <div className="flex gap-6 text-sm">
           {links.map(({ href, label }) => (
