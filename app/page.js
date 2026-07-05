@@ -1,6 +1,7 @@
 "use client";
 
 import Hero from "@/components/Hero";
+import PromoCode from "@/components/PromoCode";
 import Features from "@/components/Features";
 import ScreenshotGallery from "@/components/ScreenshotGallery";
 import { siteConfig } from "@/lib/config";
@@ -12,6 +13,7 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       <Hero />
+      <PromoCode />
       <Features />
       <ScreenshotGallery />
 
