@@ -37,30 +37,28 @@ export default function PromoCode() {
 
   return (
     <section className="py-10 section-divider">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="content-card p-6 md:p-8 text-center">
-          <p className="text-lg md:text-xl font-semibold text-white">
-            {t.promo.label}
-          </p>
+      <div className="max-w-6xl mx-auto px-6 text-center">
+        <p className="text-lg md:text-xl font-semibold text-white drop-shadow">
+          {t.promo.label}
+        </p>
 
-          <div className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <button
-              type="button"
-              onClick={handleCopy}
-              className="group flex items-center gap-3 bg-[#1a3a6b] hover:bg-[#1e4280] border border-blue-400/30 rounded-xl px-6 py-3 transition-colors"
-              aria-label={t.promo.copy}
-            >
-              <code className="text-xl md:text-2xl font-mono font-bold text-blue-300 tracking-wide">
-                {code}
-              </code>
-              <span className="text-sm text-gray-300 group-hover:text-white transition-colors">
-                {copied ? t.promo.copied : t.promo.copy}
-              </span>
-            </button>
-          </div>
-
-          <p className="text-gray-400 text-sm mt-4">{t.promo.hint}</p>
+        <div className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={handleCopy}
+            className="group flex items-center gap-3 bg-[#1a3a6b] hover:bg-[#1e4280] border border-blue-400/30 rounded-xl px-6 py-3 transition-colors"
+            aria-label={t.promo.copy}
+          >
+            <code className="text-xl md:text-2xl font-mono font-bold text-blue-300 tracking-wide">
+              {code}
+            </code>
+            <span className="text-sm text-gray-300 group-hover:text-white transition-colors">
+              {copied ? t.promo.copied : t.promo.copy}
+            </span>
+          </button>
         </div>
+
+        <p className="text-gray-300 text-sm mt-4 drop-shadow">{t.promo.hint}</p>
       </div>
     </section>
   );
