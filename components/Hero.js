@@ -14,9 +14,6 @@ export default function Hero() {
       <div className="relative max-w-6xl mx-auto px-6 py-16 md:py-24">
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <div>
-            <span className="inline-block text-sm text-blue-300 content-card px-3 py-1 mb-4">
-              {t.hero.badge}
-            </span>
             <div className="mb-2">
               <Logo className="h-12 w-auto md:h-16" />
             </div>
