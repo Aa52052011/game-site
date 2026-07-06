@@ -26,7 +26,7 @@ export default function Hero() {
             </p>
             <p className="text-gray-300 mt-2 drop-shadow">{t.hero.description}</p>
 
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-8 flex flex-wrap gap-4 justify-center md:justify-start">
               <a
                 href={siteConfig.registerUrl}
                 target="_blank"
