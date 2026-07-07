@@ -36,7 +36,10 @@ export default function StatsPage() {
   const [refreshing, setRefreshing] = useState(false);
 
   const loadStats = useCallback(async () => {
-    const res = await fetch(`/api/stats?_=${Date.now()}`, { cache: "no-store" });
+    const res = await fetch(`/api/stats?_=${Date.now()}`, {
+      cache: "no-store",
+      credentials: "include",
+    });
     if (res.status === 401) {
       setAuthed(false);
       return;
@@ -66,6 +69,7 @@ export default function StatsPage() {
     const res = await fetch("/api/stats/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ password }),
     });
     const json = await res.json();
@@ -78,7 +82,7 @@ export default function StatsPage() {
   };
 
   const handleLogout = async () => {
-    await fetch("/api/stats/login", { method: "DELETE" });
+    await fetch("/api/stats/login", { method: "DELETE", credentials: "include" });
     setAuthed(false);
     setData(null);
   };
@@ -86,7 +90,7 @@ export default function StatsPage() {
   const handleReset = async () => {
     if (!window.confirm("确定要清空所有统计数据吗？此操作不可恢复。")) return;
 
-    const res = await fetch("/api/stats/reset", { method: "POST" });
+    const res = await fetch("/api/stats/reset", { method: "POST", credentials: "include" });
     const json = await res.json();
     if (!res.ok) {
       window.alert(json.error || "清空失败");
