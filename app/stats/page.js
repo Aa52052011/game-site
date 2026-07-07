@@ -211,8 +211,19 @@ export default function StatsPage() {
         </div>
 
         {!data?.configured ? (
-          <div className="content-card p-4 text-amber-300 text-sm">
-            尚未配置 Vercel Blob 存储，数据暂时无法持久保存。请在 Vercel 项目中创建 Blob Store 并重新部署。
+          <div className="content-card p-5 border border-red-400/40 bg-red-950/40 text-red-100 text-sm space-y-3">
+            <p className="font-semibold text-base text-red-200">⚠ 数据无法记录：Vercel Blob 存储未配置</p>
+            <p>当前网站访问和点击事件无法保存，所以统计始终显示 0。请按以下步骤操作：</p>
+            <ol className="list-decimal list-inside space-y-1 text-red-100/90">
+              <li>打开 Vercel 项目 → <strong>Storage</strong> → <strong>Create Database</strong> → 选择 <strong>Blob</strong></li>
+              <li>创建后连接到本项目（Connect to Project）</li>
+              <li>确认 Production 环境有 <code className="text-red-200">BLOB_READ_WRITE_TOKEN</code> 变量</li>
+              <li>重新 <strong>Redeploy</strong> 部署</li>
+              <li>打开首页 https://get1xplay.com 测试点击，再回到此页刷新</li>
+            </ol>
+            <p className="text-xs text-red-200/70">
+              诊断：Token {data?.storage?.hasBlobToken ? "✓" : "✗"} · Store ID {data?.storage?.hasBlobStoreId ? "✓" : "✗"}
+            </p>
           </div>
         ) : null}
 

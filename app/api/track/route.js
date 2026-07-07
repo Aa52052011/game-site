@@ -23,11 +23,26 @@ export async function POST(request) {
       return NextResponse.json({ ok: false }, { status: 400 });
     }
 
-    const saved = await recordEvent(event, params, visitorId);
-    if (!saved) {
+    const result = await recordEvent(event, params, visitorId);
+    if (!result.ok) {
+      if (result.reason === "not_configured") {
+        return NextResponse.json(
+          {
+            ok: false,
+            error: "Stats storage is not configured.",
+            hint: "Connect a Vercel Blob Store to this project and redeploy.",
+          },
+          { status: 503 }
+        );
+      }
+
       return NextResponse.json(
-        { ok: false, error: "Stats storage is not configured." },
-        { status: 503 }
+        {
+          ok: false,
+          error: "Failed to save event.",
+          detail: result.message,
+        },
+        { status: 500 }
       );
     }
 
