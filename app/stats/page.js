@@ -34,6 +34,7 @@ export default function StatsPage() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const loadStats = useCallback(async () => {
     const res = await fetch(`/api/stats?_=${Date.now()}`, {
@@ -114,13 +115,23 @@ export default function StatsPage() {
           <h1 className="text-2xl font-bold">数据统计</h1>
           <p className="text-gray-400 text-sm mt-2">请输入管理密码查看访问与点击数据</p>
           <form onSubmit={handleLogin} className="mt-6 space-y-4">
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="管理密码"
-              className="w-full bg-black/40 border border-white/15 rounded-xl px-4 py-3 outline-none focus:border-blue-400"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="管理密码"
+                className="w-full bg-black/40 border border-white/15 rounded-xl px-4 py-3 pe-16 outline-none focus:border-blue-400"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute inset-y-0 end-3 my-auto px-2 text-xs text-gray-400 hover:text-white transition-colors"
+                aria-label={showPassword ? "隐藏密码" : "显示密码"}
+              >
+                {showPassword ? "隐藏" : "显示"}
+              </button>
+            </div>
             {error ? <p className="text-red-400 text-sm">{error}</p> : null}
             <button
               type="submit"
