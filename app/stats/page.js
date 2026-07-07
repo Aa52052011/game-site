@@ -36,7 +36,7 @@ export default function StatsPage() {
   const [refreshing, setRefreshing] = useState(false);
 
   const loadStats = useCallback(async () => {
-    const res = await fetch("/api/stats", { cache: "no-store" });
+    const res = await fetch(`/api/stats?_=${Date.now()}`, { cache: "no-store" });
     if (res.status === 401) {
       setAuthed(false);
       return;

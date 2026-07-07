@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { recordEvent } from "@/lib/stats-store";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 export async function POST(request) {
   try {
     let body;
@@ -20,9 +23,17 @@ export async function POST(request) {
       return NextResponse.json({ ok: false }, { status: 400 });
     }
 
-    await recordEvent(event, params, visitorId);
+    const saved = await recordEvent(event, params, visitorId);
+    if (!saved) {
+      return NextResponse.json(
+        { ok: false, error: "Stats storage is not configured." },
+        { status: 503 }
+      );
+    }
+
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (error) {
+    console.error("[api/track]", error);
     return NextResponse.json({ ok: false }, { status: 500 });
   }
 }
