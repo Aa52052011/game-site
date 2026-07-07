@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/config";
 import {
   defaultLocale,
+  getHtmlLang,
+  getTextDirection,
   interpolate,
   locales,
   translations,
@@ -41,7 +43,8 @@ export function LanguageProvider({ children }) {
     if (!ready) return;
 
     localStorage.setItem(STORAGE_KEY, locale);
-    document.documentElement.lang = locale === "zh-TW" ? "zh-Hant" : "en";
+    document.documentElement.lang = getHtmlLang(locale);
+    document.documentElement.dir = getTextDirection(locale);
 
     const t = translations[locale];
     const name = siteConfig.name;

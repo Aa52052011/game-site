@@ -42,3 +42,8 @@
     @apply border-t border-white/10;
   }
 }
+
+[dir="rtl"] .site-overlay,
+[dir="rtl"] body {
+  direction: rtl;
+}
