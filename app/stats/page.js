@@ -35,6 +35,16 @@ export default function StatsPage() {
   const [data, setData] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [configHint, setConfigHint] = useState(null);
+
+  useEffect(() => {
+    fetch("/api/stats/login", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.ok) setConfigHint(json);
+      })
+      .catch(() => {});
+  }, []);
 
   const loadStats = useCallback(async () => {
     const res = await fetch(`/api/stats?_=${Date.now()}`, {
@@ -114,6 +124,12 @@ export default function StatsPage() {
         <div className="max-w-md mx-auto content-card p-8">
           <h1 className="text-2xl font-bold">数据统计</h1>
           <p className="text-gray-400 text-sm mt-2">请输入管理密码查看访问与点击数据</p>
+          {configHint?.configured ? (
+            <p className="text-gray-500 text-xs mt-2">
+              服务器端密码长度：{configHint.passwordLength} 个字符
+              {!configHint.hasSessionSecret ? "（缺少 STATS_SESSION_SECRET）" : ""}
+            </p>
+          ) : null}
           <form onSubmit={handleLogin} className="mt-6 space-y-4">
             <div className="relative">
               <input
