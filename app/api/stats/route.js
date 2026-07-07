@@ -10,13 +10,18 @@ export async function GET() {
     return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
   }
 
-  const data = await getStatsSummary();
-  return NextResponse.json(
-    { ok: true, data },
-    {
-      headers: {
-        "Cache-Control": "no-store, no-cache, must-revalidate",
-      },
-    }
-  );
+  try {
+    const data = await getStatsSummary();
+    return NextResponse.json(
+      { ok: true, data },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate",
+        },
+      }
+    );
+  } catch (error) {
+    console.error("[api/stats]", error);
+    return NextResponse.json({ ok: false, error: "Failed to load stats." }, { status: 500 });
+  }
 }

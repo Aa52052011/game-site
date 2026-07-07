@@ -55,6 +55,10 @@ export default function StatsPage() {
       setAuthed(false);
       return;
     }
+    if (!res.ok) {
+      setError("登录成功，但加载统计数据失败，请点击立即刷新重试。");
+      return;
+    }
     const json = await res.json();
     if (json.ok) {
       setAuthed(true);
@@ -77,11 +81,12 @@ export default function StatsPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
+    const trimmed = password.trim();
     const res = await fetch("/api/stats/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ password }),
+      body: JSON.stringify({ password: trimmed }),
     });
     const json = await res.json();
     if (!res.ok) {
@@ -89,6 +94,7 @@ export default function StatsPage() {
       return;
     }
     setPassword("");
+    setAuthed(true);
     await loadStats();
   };
 
