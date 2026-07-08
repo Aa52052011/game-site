@@ -279,25 +279,7 @@ export default function StatsPage() {
             <StatCard label="今日促销码复制" value={today.promoCopy ?? 0} />
             <StatCard label="今日页面停留" value={today.pageEngagement ?? 0} hint="离开页面时上报" />
             <StatCard label="今日滚动触发" value={today.scrollDepth ?? 0} hint="25/50/75/100% 累计" />
-            <StatCard label="今日总事件" value={today.totalEvents ?? 0} hint="下方明细之和应一致" />
-          </div>
-        </section>
-
-        <section>
-          <h2 className="text-lg font-semibold mb-4">今日事件明细</h2>
-          <div className="content-card divide-y divide-white/10">
-            {Object.keys(today.byEvent || {}).length === 0 ? (
-              <div className="px-5 py-4 text-sm text-gray-500">今日暂无事件</div>
-            ) : (
-              Object.entries(today.byEvent || {})
-                .sort((a, b) => b[1] - a[1])
-                .map(([name, count]) => (
-                  <div key={name} className="flex items-center justify-between px-5 py-3 text-sm">
-                    <span className="text-gray-300">{eventLabel(name)}</span>
-                    <span className="font-mono text-blue-300">{count}</span>
-                  </div>
-                ))
-            )}
+            <StatCard label="今日总事件" value={today.totalEvents ?? 0} hint="明细见页面底部" />
           </div>
         </section>
 
@@ -371,6 +353,24 @@ export default function StatsPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+        </section>
+
+        <section>
+          <h2 className="text-lg font-semibold mb-4">今日事件明细</h2>
+          <div className="content-card divide-y divide-white/10">
+            {Object.keys(today.byEvent || {}).length === 0 ? (
+              <div className="px-5 py-4 text-sm text-gray-500">今日暂无事件</div>
+            ) : (
+              Object.entries(today.byEvent || {})
+                .sort((a, b) => b[1] - a[1])
+                .map(([name, count]) => (
+                  <div key={name} className="flex items-center justify-between px-5 py-3 text-sm">
+                    <span className="text-gray-300">{eventLabel(name)}</span>
+                    <span className="font-mono text-blue-300">{count}</span>
+                  </div>
+                ))
+            )}
           </div>
         </section>
       </div>
