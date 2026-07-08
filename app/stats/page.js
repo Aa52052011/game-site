@@ -330,9 +330,9 @@ export default function StatsPage() {
 
         <section>
           <h2 className="text-lg font-semibold mb-4">最近事件</h2>
-          <div className="content-card overflow-x-auto">
+          <div className="content-card overflow-auto max-h-[420px]">
             <table className="w-full text-sm">
-              <thead>
+              <thead className="sticky top-0 bg-black/80 backdrop-blur-sm z-10">
                 <tr className="text-gray-400 border-b border-white/10">
                   <th className="text-left px-4 py-3 font-medium">时间</th>
                   <th className="text-left px-4 py-3 font-medium">事件</th>
@@ -340,7 +340,7 @@ export default function StatsPage() {
                 </tr>
               </thead>
               <tbody>
-                {(data?.recentEvents || []).slice(0, 30).map((item, index) => (
+                {(data?.recentEvents || []).slice(0, 15).map((item, index) => (
                   <tr key={`${item.at}-${index}`} className="border-b border-white/5">
                     <td className="px-4 py-3 text-gray-400 whitespace-nowrap">
                       {new Date(item.at).toLocaleString("zh-TW")}
