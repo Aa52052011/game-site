@@ -220,6 +220,9 @@ export default function StatsPage() {
                 : ""}
               {data?.eventCount !== undefined ? ` · 已记录 ${data.eventCount} 条事件` : ""}
             </p>
+            <p className="text-gray-500 text-xs mt-1">
+              访问统计仅计入首页 / 与联系页 /contact（本统计页不计入访问）
+            </p>
           </div>
           <div className="flex items-center gap-3">
             <button
