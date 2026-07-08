@@ -21,7 +21,7 @@ export default function Contact() {
               href={contact.telegram}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackExternalClick("telegram", "contact")}
+              onPointerDown={() => trackExternalClick("telegram", "contact")}
               className="mt-1 block hover:text-blue-400 transition-colors"
             >
               {contact.telegram}

@@ -28,7 +28,7 @@ export default function Hero() {
                 href={siteConfig.registerUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => trackRegisterClick("hero")}
+                onPointerDown={() => trackRegisterClick("hero")}
                 className="bg-blue-500 hover:bg-blue-600 px-8 py-3 rounded-xl text-lg font-medium transition-colors"
               >
                 {t.hero.register}
