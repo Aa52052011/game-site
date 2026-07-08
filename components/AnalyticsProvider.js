@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { Analytics } from "@vercel/analytics/react";
 import {
+  resetEngagementGuard,
   trackPageEngagement,
   trackPageView,
   trackScrollDepth,
@@ -25,6 +26,7 @@ function isTrackedPath(pathname) {
 function AnalyticsTracker() {
   const pathname = usePathname();
   const startRef = useRef(Date.now());
+  const maxScrollPctRef = useRef(0);
   const scrollFiredRef = useRef(new Set());
   const engagementSentRef = useRef(false);
 
@@ -33,18 +35,25 @@ function AnalyticsTracker() {
     if (!isTrackedPath(pathname)) return;
 
     startRef.current = Date.now();
+    maxScrollPctRef.current = 0;
     scrollFiredRef.current = new Set();
     engagementSentRef.current = false;
+    resetEngagementGuard(path);
 
     trackPageView(path);
 
-    const onScroll = () => {
+    const recordScrollDepth = () => {
       const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-      if (scrollable <= 0) return;
+      const pct = scrollable <= 0
+        ? 100
+        : Math.min(100, Math.round((window.scrollY / scrollable) * 100));
 
-      const pct = Math.round((window.scrollY / scrollable) * 100);
+      if (pct > maxScrollPctRef.current) {
+        maxScrollPctRef.current = pct;
+      }
+
       SCROLL_THRESHOLDS.forEach((threshold) => {
-        if (pct >= threshold && !scrollFiredRef.current.has(threshold)) {
+        if (maxScrollPctRef.current >= threshold && !scrollFiredRef.current.has(threshold)) {
           scrollFiredRef.current.add(threshold);
           trackScrollDepth(path, threshold);
         }
@@ -63,12 +72,15 @@ function AnalyticsTracker() {
       if (document.visibilityState === "hidden") sendEngagement();
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
+    recordScrollDepth();
+    window.addEventListener("scroll", recordScrollDepth, { passive: true });
+    window.addEventListener("resize", recordScrollDepth, { passive: true });
     document.addEventListener("visibilitychange", onVisibilityChange);
     window.addEventListener("pagehide", sendEngagement);
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scroll", recordScrollDepth);
+      window.removeEventListener("resize", recordScrollDepth);
       document.removeEventListener("visibilitychange", onVisibilityChange);
       window.removeEventListener("pagehide", sendEngagement);
       sendEngagement();
