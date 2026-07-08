@@ -17,7 +17,6 @@ function AnalyticsTracker() {
   const startRef = useRef(Date.now());
   const scrollFiredRef = useRef(new Set());
   const engagementSentRef = useRef(false);
-  const pageViewSentRef = useRef(false);
 
   useEffect(() => {
     if (!TRACKED_PATHS.has(pathname)) return;
@@ -25,19 +24,11 @@ function AnalyticsTracker() {
     startRef.current = Date.now();
     scrollFiredRef.current = new Set();
     engagementSentRef.current = false;
-    pageViewSentRef.current = false;
 
-    const sendPageView = () => {
-      if (pageViewSentRef.current) return;
-      pageViewSentRef.current = true;
-      trackPageView(pathname);
-    };
-
-    if (document.readyState === "complete") {
-      sendPageView();
-    } else {
-      window.addEventListener("load", sendPageView, { once: true });
-    }
+    // Fire on route enter. Do not wait for window "load" — in Next.js the load
+    // event may have already fired before hydration, and it never fires again on
+    // client-side navigations between / and /contact.
+    trackPageView(pathname);
 
     const onScroll = () => {
       const scrollable = document.documentElement.scrollHeight - window.innerHeight;
@@ -68,11 +59,12 @@ function AnalyticsTracker() {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("visibilitychange", onVisibilityChange);
+    window.addEventListener("pagehide", sendEngagement);
 
     return () => {
-      window.removeEventListener("load", sendPageView);
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("visibilitychange", onVisibilityChange);
+      window.removeEventListener("pagehide", sendEngagement);
       sendEngagement();
     };
   }, [pathname]);
