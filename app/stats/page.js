@@ -113,6 +113,43 @@ export default function StatsPage() {
       window.alert(json.error || "清空失败");
       return;
     }
+
+    setError("");
+    setData((prev) =>
+      prev
+        ? {
+            ...prev,
+            totals: {
+              pageViews: 0,
+              registerClicks: 0,
+              registerHero: 0,
+              registerCta: 0,
+              promoCopy: 0,
+              navClicks: 0,
+              languageSwitch: 0,
+              telegramClicks: 0,
+              viewScreenshots: 0,
+              avgEngagementSeconds: 0,
+            },
+            today: {
+              pageViews: 0,
+              registerClicks: 0,
+              promoCopy: 0,
+              navClicks: 0,
+              languageSwitch: 0,
+              telegramClicks: 0,
+              viewScreenshots: 0,
+              totalEvents: 0,
+              uniqueVisitors: 0,
+            },
+            scrollDepth: { 25: 0, 50: 0, 75: 0, 100: 0 },
+            pageViews: {},
+            recentEvents: [],
+            eventCount: 0,
+            updatedAt: new Date().toISOString(),
+          }
+        : prev
+    );
     await loadStats();
   };
 
