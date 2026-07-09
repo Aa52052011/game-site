@@ -18,8 +18,8 @@ export async function GET(request) {
   try {
     const fresh = request.nextUrl.searchParams.get("fresh") === "1";
     const data = fresh
-      ? await refreshStatsSummary(getStatsSummary)
-      : await getCachedStatsSummary(getStatsSummary);
+      ? await refreshStatsSummary(() => getStatsSummary({ rebuild: true }))
+      : await getCachedStatsSummary(() => getStatsSummary());
 
     return NextResponse.json(
       { ok: true, data },

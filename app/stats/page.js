@@ -71,8 +71,40 @@ export default function StatsPage() {
 
   useEffect(() => {
     loadStats().finally(() => setLoading(false));
-    const timer = setInterval(() => loadStats(), STATS_POLL_MS);
-    return () => clearInterval(timer);
+
+    let timer;
+
+    const startPolling = () => {
+      if (timer) return;
+      timer = setInterval(() => {
+        if (document.visibilityState === "visible") {
+          loadStats();
+        }
+      }, STATS_POLL_MS);
+    };
+
+    const stopPolling = () => {
+      if (!timer) return;
+      clearInterval(timer);
+      timer = undefined;
+    };
+
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        loadStats();
+        startPolling();
+      } else {
+        stopPolling();
+      }
+    };
+
+    startPolling();
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    return () => {
+      stopPolling();
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
   }, [loadStats]);
 
   const handleRefresh = async () => {
@@ -220,7 +252,7 @@ export default function StatsPage() {
           <div>
             <h1 className="text-3xl font-bold">数据统计</h1>
             <p className="text-gray-400 text-sm mt-1">
-              每 60 秒自动刷新
+              每 60 秒自动刷新（仅在本标签页可见时）
               {data?.updatedAt
                 ? ` · 最后更新 ${new Date(data.updatedAt).toLocaleTimeString("zh-TW")}`
                 : ""}
@@ -282,7 +314,7 @@ export default function StatsPage() {
             <StatCard label="今日促销码复制" value={today.promoCopy ?? 0} />
             <StatCard label="今日页面停留" value={today.pageEngagement ?? 0} hint="离开页面时上报" />
             <StatCard label="今日滚动触发" value={today.scrollDepth ?? 0} hint="25/50/75/100% 累计" />
-            <StatCard label="今日总事件" value={today.totalEvents ?? 0} hint="明细见页面底部" />
+            <StatCard label="今日总事件" value={today.totalEvents ?? 0} hint="标签页可见时每 60 秒刷新" />
           </div>
         </section>
 

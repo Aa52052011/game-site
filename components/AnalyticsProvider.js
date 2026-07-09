@@ -2,14 +2,12 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { Analytics } from "@vercel/analytics/react";
 import {
   resetEngagementGuard,
   trackPageEngagement,
   trackPageView,
   trackScrollDepth,
 } from "@/lib/analytics";
-
 const SCROLL_THRESHOLDS = [25, 50, 75, 100];
 
 function normalizePath(pathname) {
@@ -91,10 +89,5 @@ function AnalyticsTracker() {
 }
 
 export default function AnalyticsProvider() {
-  return (
-    <>
-      <AnalyticsTracker />
-      <Analytics />
-    </>
-  );
+  return <AnalyticsTracker />;
 }
