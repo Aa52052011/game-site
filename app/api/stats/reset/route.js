@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { isStatsAuthenticated } from "@/lib/stats-auth";
+import { invalidateStatsCache } from "@/lib/stats-cache";
 import { resetStats } from "@/lib/stats-store";
-
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
@@ -18,5 +18,6 @@ export async function POST() {
     );
   }
 
-  return NextResponse.json({ ok: true });
-}
+  invalidateStatsCache();
+
+  return NextResponse.json({ ok: true });}

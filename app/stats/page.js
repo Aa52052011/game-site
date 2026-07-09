@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 
+const STATS_POLL_MS = 60_000;
+
 function StatCard({ label, value, hint }) {
   return (
     <div className="content-card p-5">
@@ -46,8 +48,9 @@ export default function StatsPage() {
       .catch(() => {});
   }, []);
 
-  const loadStats = useCallback(async () => {
-    const res = await fetch(`/api/stats?_=${Date.now()}`, {
+  const loadStats = useCallback(async ({ fresh = false } = {}) => {
+    const query = fresh ? "?fresh=1" : "";
+    const res = await fetch(`/api/stats${query}`, {
       cache: "no-store",
       credentials: "include",
     });
@@ -68,13 +71,13 @@ export default function StatsPage() {
 
   useEffect(() => {
     loadStats().finally(() => setLoading(false));
-    const timer = setInterval(loadStats, 5000);
+    const timer = setInterval(() => loadStats(), STATS_POLL_MS);
     return () => clearInterval(timer);
   }, [loadStats]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
-    await loadStats();
+    await loadStats({ fresh: true });
     setRefreshing(false);
   };
 
@@ -95,7 +98,7 @@ export default function StatsPage() {
     }
     setPassword("");
     setAuthed(true);
-    await loadStats();
+    await loadStats({ fresh: true });
   };
 
   const handleLogout = async () => {
@@ -153,7 +156,7 @@ export default function StatsPage() {
           }
         : prev
     );
-    await loadStats();
+    await loadStats({ fresh: true });
   };
 
   if (loading) {
@@ -217,7 +220,7 @@ export default function StatsPage() {
           <div>
             <h1 className="text-3xl font-bold">数据统计</h1>
             <p className="text-gray-400 text-sm mt-1">
-              每 5 秒自动刷新
+              每 60 秒自动刷新
               {data?.updatedAt
                 ? ` · 最后更新 ${new Date(data.updatedAt).toLocaleTimeString("zh-TW")}`
                 : ""}

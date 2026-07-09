@@ -1,22 +1,31 @@
 import { NextResponse } from "next/server";
 import { isStatsAuthenticated } from "@/lib/stats-auth";
+import {
+  getCachedStatsSummary,
+  invalidateStatsCache,
+  refreshStatsSummary,
+} from "@/lib/stats-cache";
 import { getStatsSummary } from "@/lib/stats-store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-export async function GET() {
+export async function GET(request) {
   if (!(await isStatsAuthenticated())) {
     return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
   }
 
   try {
-    const data = await getStatsSummary();
+    const fresh = request.nextUrl.searchParams.get("fresh") === "1";
+    const data = fresh
+      ? await refreshStatsSummary(getStatsSummary)
+      : await getCachedStatsSummary(getStatsSummary);
+
     return NextResponse.json(
       { ok: true, data },
       {
         headers: {
-          "Cache-Control": "no-store, no-cache, must-revalidate",
+          "Cache-Control": "private, no-cache",
         },
       }
     );
